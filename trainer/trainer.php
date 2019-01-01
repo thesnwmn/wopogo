@@ -70,7 +70,7 @@ function buildMedalTable($catId) {
 
         $rowHtml .= "<div>";
         $rowHtml .= "<a href=".$site_root."/stat/stat.php?id=".$statId.">";
-        $rowHtml .= "<img src='../res/img/medal_small/".$statId."_".$type.".png'>";
+        $rowHtml .= "<img src='../local/medal_small/".$statId."_".$type.".png'>";
         $rowHtml .= "</a>";
         $rowHtml .= "</div>";
 
