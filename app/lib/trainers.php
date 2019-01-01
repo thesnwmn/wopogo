@@ -163,7 +163,6 @@ function GetTrainerLevel($trainer) {
 
   $result = $db->query($sql);
 
-  print_r($result);
   $xp = 0;
 
   if ($result->num_rows === 1) {
