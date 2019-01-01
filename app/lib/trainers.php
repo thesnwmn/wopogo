@@ -239,16 +239,9 @@ function GetTrainerLevel($trainer) {
 
 function GetTrainers() {
   return _GetTrainers(
-    "SELECT ".
-	      "pt.id, pt.name, pt.team, pt.user, ".
-        "( ".
-          "SELECT timestamp ".
-          "FROM pogoco_trainer_stat_latest ptsl ".
-          "WHERE ptsl.trainer = pt.id ".
-          "ORDER BY timestamp DESC ".
-          "LIMIT 1 ".
-        ") as last_update ".
-    "FROM pogoco_trainer pt ".
+    "SELECT pt.id, pt.name, pt.team, pt.user, pglu.timestamp as last_update ".
+    "FROM pogoco_trainer pt, pogoco_gen_last_updated pglu ".
+    "WHERE pglu.trainer = pt.id ".
     "ORDER BY name");
 }
 function GetLastUpdatedTrainers($limit = 20) {
@@ -263,18 +256,11 @@ function GetLastUpdatedTrainers($limit = 20) {
 
 function GetTrainersForUserByName($username) {
   return _getTrainers(
-    "SELECT ".
-	      "pt.id, pt.name, pt.team, pt.user, ".
-        "( ".
-          "SELECT timestamp ".
-          "FROM pogoco_trainer_stat_latest ptsl ".
-        "WHERE ptsl.trainer = pt.id ".
-        "ORDER BY timestamp DESC ".
-        "LIMIT 1 ".
-    ") as last_update ".
-"FROM pogoco_trainer pt, pogoco_user pu ".
-"WHERE pt.user = pu.id AND pu.username = '".$username."' ".
-"ORDER BY name");
+    "SELECT pt.id, pt.name, pt.team, pt.user, pglu.timestamp as last_update ".
+    "FROM pogoco_trainer pt, pogoco_user pu, pogoco_gen_last_updated pglu ".
+    "WHERE pt.user = pu.id AND pu.username = '".$username."' ".
+    "  AND pglu.trainer = pt.id ".
+    "ORDER BY name");
 }
 function _GetTrainers($sql) {
 
