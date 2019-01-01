@@ -113,6 +113,7 @@ try {
   <div class="row">
     <button type="submit" class="four columns button-primary">Save</button>
     <a class="four columns button" onclick="resetPage()">Reset</a>
+    <a class="four columns button" onclick="copyValues()">Copy Values</a>
   </div>
     <div class="row">
     <div class="twelve columns js-form-result block error"></div>
@@ -124,6 +125,26 @@ try {
 <?php } ?>
 
 <script>
+
+function copyValues() {
+
+  var formEle = document.querySelector("#stats-form");
+  if (formEle !== null) {
+
+<?php foreach ( $stats as $statId => $stat ) { ?>
+
+    var input = formEle.querySelector("input[name='<?=$statId?>']");
+    if (typeof input !== "undefined") {
+      var currentValue = input.value;
+      if (currentValue === "") {
+        input.value = "<?=$trainerStats[$statId]['value']?>";
+      }
+    }
+<?php } ?>
+
+  }
+}
+
 function SubmitStats() {
 
   var formEle = document.querySelector("#stats-form");
