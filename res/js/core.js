@@ -262,17 +262,15 @@ function initaliseDateTime() {
     daySelect.appendChild(option);
 
     // Create variable to hold new number of days to inject
-    var dayNum;
+    var dayNum = 31;
 
-    // 31 or 30 days?
-    if(month === 'January' | month === 'March' | month === 'May' | month === 'July' | month === 'August' | month === 'October' | month === 'December') {
-      dayNum = 31;
-    } else if(month === 'April' | month === 'June' | month === 'September' | month === 'November') {
-      dayNum = 30;
-    } else {
-    // If month is February, calculate whether it is a leap year or not
+    if (month === '02') {
+      // If month is February, calculate whether it is a leap year or not
       var year = yearSelect.value;
       (year - 2016) % 4 === 0 ? dayNum = 29 : dayNum = 28;
+    } else if (month === '04' | month === '06' | month === '09' | month === '11') {
+      // Shorter months
+      dayNum = 30;
     }
 
     // inject the right number of new <option> elements into the day <select>
