@@ -1,0 +1,833 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PoGoCo | API Reference</title>
+    <link rel="stylesheet" href="stylesheets/foundation.min.css" />
+    <link rel="stylesheet" href="stylesheets/spectacle.min.css" />
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- <script src="javascripts/foundation.js"></script> -->
+    <script src="javascripts/spectacle.min.js"></script>
+  </head>
+  <body id="spectacle">
+    <div id="page" class="drawer-layout drawer-slide-right-large">
+      <div id="sidebar">
+        <button class="close-button" aria-label="Close menu" type="button" data-drawer-close>
+          <span aria-hidden="true">×</span>
+        </button>
+        <nav id="nav" role="navigation">
+          <h5>Topics</h5>
+          <a href="#introduction">Introduction</a>
+          <a href="#authentication">Authentication</a>
+          <h5>Operations</h5>
+          <section>
+            <a href="#tag-Stats">Stats</a>
+            <ul>
+              <li>
+                <a href="#operation--stat-categories.php-get"> Retrieve stat categories </a>
+              </li>
+              <li>
+                <a href="#operation--stat-stats.php-get"> Retrieve stat details </a>
+              </li>
+              <li>
+                <a href="#operation--stat-stats.php-post"> Insert trainer stats </a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <a href="#tag-Trainers">Trainers</a>
+            <ul> </ul>
+          </section>
+          <h5>Schema Definitions</h5>
+          <a href="#definition-CategoryInfo"> CategoryInfo </a>
+          <a href="#definition-Errors"> Errors </a>
+          <a href="#definition-Error"> Error </a>
+          <a href="#definition-StatInfo"> StatInfo </a>
+          <a href="#definition-StatValue"> StatValue </a>
+        </nav>
+      </div>
+      <div id="docs" class="row collapse expanded drawer" data-drawer>
+        <button class="floating-menu-icon" type="button" data-drawer-slide="right">
+          <span class="hamburger"></span>
+        </button>
+        <div class="example-box doc-content"></div>
+        <article>
+          <h1 class="doc-title">PoGoCo
+            <span>API Reference</span>
+          </h1>
+          <div id="introduction" data-traverse-target="introduction">
+            <div class="doc-row">
+              <div class="doc-copy">
+                <p>Pokemon Go Community site API.</p>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>API Endpoint</h5>
+                  <!-- <div class="hljs"> --><pre><code>https://&lt;host&gt;/app/api/v1</code></pre>
+                  <!-- </div> -->
+                  <h5>Schemes:
+                    <span>http, https</span>
+                  </h5>
+                  <h5>Version:
+                    <span>1.0.0</span>
+                  </h5>
+                </section>
+              </div>
+            </div>
+          </div>
+          <!-- <h1 id="security" data-traverse-target="security">Security</h1> -->
+          <h1 id="authentication" data-traverse-target="authentication">Authentication</h1>
+          <div id="security-definition-api_key" class="panel">
+            <div class="doc-row">
+              <div class="doc-copy">
+                <h3 class="security-definition-title">
+                  <span class="security-name">api_key</span>
+                  <span class="swagger-security-definition-apiKey"></span>
+                </h3>
+                <section class="swagger-security-definition-properties">
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">type</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type"> apiKey </div>
+                  </div>
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">name</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type"> x-api-key </div>
+                  </div>
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">in</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type"> header </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1 id="tag-Stats" class="swagger-summary-tag" data-traverse-target="tag-Stats">Stats</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>Everything about stats</p>
+            </div>
+          </div>
+          <div id="operation--stat-categories.php-get" class="operation panel" data-traverse-target="operation--stat-categories.php-get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Stats">Stats</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Retrieve stat categories</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/stat/categories.php</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref"></div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Success</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Errors">Errors</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Validation error</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;categories&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;GENERAL_MEDAL&quot;</span>,
+      <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;Medals&quot;</span>,
+      <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;General medals&quot;</span>,
+      <span class="hljs-attr">&quot;weight&quot;</span>: <span class="hljs-string">&quot;30&quot;</span>
+    }
+  ]
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(400 Bad Request)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;errors&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Invalid stat&quot;</span>,
+      <span class="hljs-attr">&quot;field&quot;</span>: <span class="hljs-string">&quot;stat&quot;</span>
+    }
+  ]
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--stat-stats.php-get" class="operation panel" data-traverse-target="operation--stat-stats.php-get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Stats">Stats</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Retrieve stat details</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/stat/stats.php</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref"></div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Success</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Errors">Errors</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Validation error</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;stats&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;jogger&quot;</span>,
+      <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;Jogger&quot;</span>,
+      <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;Walk this far&quot;</span>,
+      <span class="hljs-attr">&quot;stat_category&quot;</span>: <span class="hljs-string">&quot;GENERAL_MEDAL&quot;</span>,
+      <span class="hljs-attr">&quot;weight&quot;</span>: <span class="hljs-string">&quot;10&quot;</span>,
+      <span class="hljs-attr">&quot;data_type&quot;</span>: <span class="hljs-string">&quot;DOUBLE&quot;</span>,
+      <span class="hljs-attr">&quot;data_unit&quot;</span>: <span class="hljs-string">&quot;Km&quot;</span>,
+      <span class="hljs-attr">&quot;bronze_threshold&quot;</span>: <span class="hljs-string">&quot;10&quot;</span>,
+      <span class="hljs-attr">&quot;silver_threshold&quot;</span>: <span class="hljs-string">&quot;100&quot;</span>,
+      <span class="hljs-attr">&quot;gold_threshold&quot;</span>: <span class="hljs-string">&quot;1000&quot;</span>
+    }
+  ]
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(400 Bad Request)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;errors&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Invalid stat&quot;</span>,
+      <span class="hljs-attr">&quot;field&quot;</span>: <span class="hljs-string">&quot;stat&quot;</span>
+    }
+  ]
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--stat-stats.php-post" class="operation panel" data-traverse-target="operation--stat-stats.php-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Stats">Stats</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Insert trainer stats</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/stat/stats.php</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <p>Set of stats to be inserted</p>
+                  <section class="json-schema-properties">
+                    <dl>
+                      <dt data-property-name="stats">
+                        <span class="json-property-name">stats:</span>
+                        <span class="json-property-type">
+                          <span class="json-schema-ref-array">
+                            <a class="json-schema-ref" href="#/definitions/StatValue">StatValue</a>
+                          </span>
+                        </span>
+                        <span class="json-property-range" title="Value limits"></span>
+                      </dt>
+                      <dt class="json-inner-schema">
+                        <section class="json-schema-array-items">
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/StatValue">StatValue</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <div class="json-inner-schema"> </div>
+                        </section>
+                      </dt>
+                    </dl>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Content-Types:
+                    <span>application/json</span>
+                  </h5>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;stats&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;trainer&quot;</span>: <span class="hljs-string">&quot;TheBest&quot;</span>,
+      <span class="hljs-attr">&quot;stat&quot;</span>: <span class="hljs-string">&quot;xp&quot;</span>,
+      <span class="hljs-attr">&quot;timestamp&quot;</span>: <span class="hljs-string">&quot;2018-04-20 07:58&quot;</span>,
+      <span class="hljs-attr">&quot;value&quot;</span>: <span class="hljs-number">1234567</span>
+    }
+  ]
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref"></div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Success</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Errors">Errors</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Validation error</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json"><span class="hljs-string">&quot;string&quot;</span>
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(400 Bad Request)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;errors&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Invalid stat&quot;</span>,
+      <span class="hljs-attr">&quot;field&quot;</span>: <span class="hljs-string">&quot;stat&quot;</span>
+    }
+  ]
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1 id="tag-Trainers" class="swagger-summary-tag" data-traverse-target="tag-Trainers">Trainers</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>Everything about trainers</p>
+            </div>
+          </div>
+          <h1>Schema Definitions</h1>
+          <div id="definition-CategoryInfo" class="definition panel" data-traverse-target="definition-CategoryInfo">
+            <h2 class="panel-title">
+              <a name="/definitions/CategoryInfo"></a>CategoryInfo: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="id" class="has-description">
+                      <span class="json-property-name">id:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>category identifier</p>
+                    </dd>
+                    <dt data-property-name="title" class="has-description">
+                      <span class="json-property-name">title:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>category display title</p>
+                    </dd>
+                    <dt data-property-name="description" class="has-description">
+                      <span class="json-property-name">description:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>description of the category</p>
+                    </dd>
+                    <dt data-property-name="weight" class="has-description">
+                      <span class="json-property-name">weight:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>ordering weight (ascending)</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;GENERAL_MEDAL&quot;</span>,
+  <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;Medals&quot;</span>,
+  <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;General medals&quot;</span>,
+  <span class="hljs-attr">&quot;weight&quot;</span>: <span class="hljs-string">&quot;30&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-Errors" class="definition panel" data-traverse-target="definition-Errors">
+            <h2 class="panel-title">
+              <a name="/definitions/Errors"></a>Errors: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>A collection of errors</p>
+                </section>
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="errors">
+                      <span class="json-property-name">errors:</span>
+                      <span class="json-property-type">
+                        <span class="json-schema-ref-array">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt class="json-inner-schema">
+                      <section class="json-schema-array-items">
+                        <span class="json-property-type">
+                          <span class="">
+                            <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                          </span>
+                        </span>
+                        <span class="json-property-range" title="Value limits"></span>
+                        <div class="json-inner-schema"> </div>
+                      </section>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;errors&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Invalid stat&quot;</span>,
+      <span class="hljs-attr">&quot;field&quot;</span>: <span class="hljs-string">&quot;stat&quot;</span>
+    }
+  ]
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-Error" class="definition panel" data-traverse-target="definition-Error">
+            <h2 class="panel-title">
+              <a name="/definitions/Error"></a>Error: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>Error details</p>
+                </section>
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="text" class="has-description">
+                      <span class="json-property-name">text:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>error text</p>
+                    </dd>
+                    <dt data-property-name="field" class="has-description">
+                      <span class="json-property-name">field:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>field on request to which the error relates</p>
+                    </dd>
+                    <dt data-property-name="context" class="has-description">
+                      <span class="json-property-name">context:</span>
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>object containing details of to what the error relates</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;Invalid stat&quot;</span>,
+  <span class="hljs-attr">&quot;field&quot;</span>: <span class="hljs-string">&quot;stat&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-StatInfo" class="definition panel" data-traverse-target="definition-StatInfo">
+            <h2 class="panel-title">
+              <a name="/definitions/StatInfo"></a>StatInfo: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="id" class="has-description">
+                      <span class="json-property-name">id:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>statistic identifier</p>
+                    </dd>
+                    <dt data-property-name="title" class="has-description">
+                      <span class="json-property-name">title:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>statistic display title</p>
+                    </dd>
+                    <dt data-property-name="description" class="has-description">
+                      <span class="json-property-name">description:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>description of the statistic</p>
+                    </dd>
+                    <dt data-property-name="stat_category" class="has-description">
+                      <span class="json-property-name">stat_category:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>category to which the statistic belong</p>
+                    </dd>
+                    <dt data-property-name="weight" class="has-description">
+                      <span class="json-property-name">weight:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>ordering weight (ascending)</p>
+                    </dd>
+                    <dt data-property-name="data_type" class="has-description">
+                      <span class="json-property-name">data_type:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>value type expected</p>
+                    </dd>
+                    <dt data-property-name="data_unit" class="has-description">
+                      <span class="json-property-name">data_unit:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>unit in which the statistic is measured</p>
+                    </dd>
+                    <dt data-property-name="bronze_threshold" class="has-description">
+                      <span class="json-property-name">bronze_threshold:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>for medals only, value required to get bronze</p>
+                    </dd>
+                    <dt data-property-name="silver_threshold" class="has-description">
+                      <span class="json-property-name">silver_threshold:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>for medals only, value required to get silver</p>
+                    </dd>
+                    <dt data-property-name="gold_threshold" class="has-description">
+                      <span class="json-property-name">gold_threshold:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>for medals only, value required to get gold</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;jogger&quot;</span>,
+  <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;Jogger&quot;</span>,
+  <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;Walk this far&quot;</span>,
+  <span class="hljs-attr">&quot;stat_category&quot;</span>: <span class="hljs-string">&quot;GENERAL_MEDAL&quot;</span>,
+  <span class="hljs-attr">&quot;weight&quot;</span>: <span class="hljs-string">&quot;10&quot;</span>,
+  <span class="hljs-attr">&quot;data_type&quot;</span>: <span class="hljs-string">&quot;DOUBLE&quot;</span>,
+  <span class="hljs-attr">&quot;data_unit&quot;</span>: <span class="hljs-string">&quot;Km&quot;</span>,
+  <span class="hljs-attr">&quot;bronze_threshold&quot;</span>: <span class="hljs-string">&quot;10&quot;</span>,
+  <span class="hljs-attr">&quot;silver_threshold&quot;</span>: <span class="hljs-string">&quot;100&quot;</span>,
+  <span class="hljs-attr">&quot;gold_threshold&quot;</span>: <span class="hljs-string">&quot;1000&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-StatValue" class="definition panel" data-traverse-target="definition-StatValue">
+            <h2 class="panel-title">
+              <a name="/definitions/StatValue"></a>StatValue: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="trainer" class="has-description">
+                      <span class="json-property-name">trainer:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>trainer identifier</p>
+                    </dd>
+                    <dt data-property-name="stat" class="has-description">
+                      <span class="json-property-name">stat:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>statistic identifier</p>
+                    </dd>
+                    <dt data-property-name="timestamp" class="has-description">
+                      <span class="json-property-name">timestamp:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(date-tme)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>when, in the format YYYY-MM-DD HH:MM and must be in UTC</p>
+                    </dd>
+                    <dt data-property-name="value" class="has-description">
+                      <span class="json-property-name">value:</span>
+                      <span class="json-property-type">number</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Static value</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;trainer&quot;</span>: <span class="hljs-string">&quot;TheBest&quot;</span>,
+  <span class="hljs-attr">&quot;stat&quot;</span>: <span class="hljs-string">&quot;xp&quot;</span>,
+  <span class="hljs-attr">&quot;timestamp&quot;</span>: <span class="hljs-string">&quot;2018-04-20 07:58&quot;</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: <span class="hljs-number">1234567</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div class="doc-row no-margin">
+            <div class="doc-copy doc-separator">
+              <a class="powered-by" href="https://sourcey.com/spectacle">Documentation by
+                <span>Spectacle</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

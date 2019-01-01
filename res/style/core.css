@@ -1,0 +1,174 @@
+.body {
+  min-width: 380px;
+}
+.container {
+  min-width: 380px;
+}
+
+.header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 7rem;
+  background-color: #444444;
+  z-index: 1;
+}
+.banner {
+  height: 4rem;
+  font-size: 3rem;
+  line-height: 4rem;
+}
+.banner a {
+  text-decoration: none;
+  color: rgb(32, 161, 255);
+}
+.nav {
+  height: 3rem;
+}
+.nav a {
+  color: #ccc;
+  text-decoration: none;
+  margin: 0;
+    display: inline-block;
+      border-right: 1px solid #777;
+      padding: 0 8px;
+      height: 3rem;
+      line-height: 3rem;
+}
+.nav a:first-child {
+  border-left: 1px solid #777;
+}
+.nav a:hover {
+  background-color: #fff;
+  color: #444;
+}
+
+td > input[type="text"] {
+  padding: 2px 5px;
+  line-height: 1;
+  height: auto;
+  margin: 0;node
+  width: 100%;
+}
+
+a.material-icons {
+  text-decoration: none;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.page {
+  margin-top: 9rem;
+}
+
+@media only screen and (max-width: 550px) {
+  .only-desktop {
+    display: none;
+  }
+}
+@media only screen and (min-width: 550px) {
+  .only-mobile {
+    display: none;
+  }
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+h2, h3, h4, h5, h6 {
+  margin-top: 3rem;
+}
+.spaced {
+  margin-bottom: 2rem;
+}
+
+.block {
+  line-height: 38px;
+  margin-left: 10px;
+}
+.error {
+  color: #db5b3f;
+}
+
+.input-message {
+    margin-top: -1.5rem;
+    margin-bottom: 1.5rem;
+    margin-left: 10px;
+    float: left;
+}
+
+.center,
+.center {
+  text-align: center;
+}
+.align-right {
+  text-align: right;
+}
+img {
+  vertical-align: middle;
+}
+
+.icon-img-team-INSTINCT-dot,
+td .icon-img-team-INSTINCT,
+.icon-img-team-MYSTIC-dot,
+td .icon-img-team-MYSTIC,
+.icon-img-team-VALOR-dot,
+td .icon-img-team-VALOR {
+  display: inline-block;
+  background-image: none;
+	border-radius: 50%;
+	width: 1.8rem;
+	height: 1.8rem;
+}
+.icon-img-team-INSTINCT-dot,
+td .icon-img-team-INSTINCT {
+  background-color: #f9cc00;
+}
+.icon-img-team-MYSTIC-dot,
+td .icon-img-team-MYSTIC {
+  background-color: #1c6def;
+}
+.icon-img-team-VALOR-dot,
+td .icon-img-team-VALOR {
+  background-color: #ef4617;
+}
+
+/* Progress bar
+ */
+.progress-container {
+  line-height: 3rem;
+  border: 1px solid #bbb;
+  background-color: #eee;
+}
+.progress-bar {
+  height: 3rem;
+  align: right;
+  padding: 0;
+  display: block;
+  float: left;
+}
+.progress-text {
+  float: left;
+  margin: 0 5px;
+}
+.progress-bar > .progress-text {
+  float: right;
+}
+
+/* Team colours
+ */
+.team-fill-INSTINCT {
+  background-color: #f9cc00;
+  text: black;
+}
+.team-fill-MYSTIC {
+  background-color: #1c6def;
+  color: white;
+}
+.team-fill-VALOR {
+  background-color: #ef4617;
+  color: white;
+}

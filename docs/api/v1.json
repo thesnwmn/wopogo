@@ -1,0 +1,298 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Pokemon Go Community site API.",
+    "version": "1.0.0",
+    "title": "PoGoCo"
+  },
+  "host": "<host>",
+  "basePath": "/app/api/v1",
+  "tags": [
+    {
+      "name": "Stats",
+      "description": "Everything about stats"
+    },
+    {
+      "name": "Trainers",
+      "description": "Everything about trainers"
+    }
+  ],
+  "schemes": [
+    "http", "https"
+  ],
+  "paths": {
+    "/stat/categories.php": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Retrieve stat categories",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/CategoryInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/stat/stats.php": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Retrieve stat details",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "stats": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/StatInfo"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Insert trainer stats",
+        "description": "",
+        "operationId": "addStats",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Set of stats to be inserted",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "stats": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/StatValue"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "CategoryInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "category identifier"
+        },
+        "title": {
+          "type": "string",
+          "description": "category display title"
+        },
+        "description": {
+          "type": "string",
+          "description": "description of the category"
+        },
+        "weight": {
+          "type": "string",
+          "description": "ordering weight (ascending)"
+        }
+      },
+      "example": {
+        "id": "GENERAL_MEDAL",
+        "title": "Medals",
+        "description": "General medals",
+        "weight": "30"
+      }
+    },
+    "Errors": {
+      "description": "A collection of errors",
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref" : "#/definitions/Error"
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "description": "Error details",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "error text"
+        },
+        "field": {
+          "type": "string",
+          "description": "field on request to which the error relates"
+        },
+        "context": {
+          "type": "object",
+          "description": "object containing details of to what the error relates"
+        }
+      },
+      "example": {
+        "text": "Invalid stat",
+        "field": "stat"
+      }
+    },
+    "StatInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "statistic identifier"
+        },
+        "title": {
+          "type": "string",
+          "description": "statistic display title"
+        },
+        "description": {
+          "type": "string",
+          "description": "description of the statistic"
+        },
+        "stat_category": {
+          "type": "string",
+          "description": "category to which the statistic belong"
+        },
+        "weight": {
+          "type": "string",
+          "description": "ordering weight (ascending)"
+        },
+        "data_type": {
+          "type": "string",
+          "description": "value type expected"
+        },
+        "data_unit": {
+          "type": "string",
+          "description": "unit in which the statistic is measured"
+        },
+        "bronze_threshold": {
+          "type": "string",
+          "description": "for medals only, value required to get bronze"
+        },
+        "silver_threshold": {
+          "type": "string",
+          "description": "for medals only, value required to get silver"
+        },
+        "gold_threshold": {
+          "type": "string",
+          "description": "for medals only, value required to get gold"
+        }
+      },
+      "example": {
+        "id": "jogger",
+        "title": "Jogger",
+        "description": "Walk this far",
+        "stat_category": "GENERAL_MEDAL",
+        "weight": "10",
+        "data_type": "DOUBLE",
+        "data_unit": "Km",
+        "bronze_threshold": "10",
+        "silver_threshold": "100",
+        "gold_threshold": "1000"
+      }
+    },
+    "StatValue": {
+      "type": "object",
+      "properties": {
+        "trainer": {
+          "type": "string",
+          "description": "trainer identifier"
+        },
+        "stat": {
+          "type": "string",
+          "description": "statistic identifier"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-tme",
+          "description": "when, in the format YYYY-MM-DD HH:MM and must be in UTC"
+        },
+        "value": {
+          "type": "number",
+          "description": "Static value"
+        }
+      },
+      "example": {
+        "trainer": "TheBest",
+        "stat": "xp",
+        "timestamp": "2018-04-20 07:58",
+        "value": 1234567
+      }
+    }
+  }
+}
