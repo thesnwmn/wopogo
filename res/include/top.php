@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href="<?php echo $site_root ?>/res/style/skeleton/normalize.css">
   <link rel="stylesheet" type="text/css" href="<?php echo $site_root ?>/res/style/skeleton/skeleton.css">
   <link rel="stylesheet" type="text/css" href="<?php echo $site_root ?>/res/style/core.css">
-  <script src="<?php echo $site_root ?>/res/js/core.js"></script>
+  <script src="<?php echo $site_root ?>/res/js/core.js?1"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 </head>
