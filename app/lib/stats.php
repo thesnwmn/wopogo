@@ -107,31 +107,16 @@ function GetStatLeaderboard($statId) {
 
   $dbResult = dbQuery(
     "SELECT ".
-        "r.rank, ".
-        "t.value, ".
-        "t.trainer, ".
+        "pgl.position as rank, ".
+        "pgl.value, ".
+        "pgl.trainer, ".
         "pt.name, ".
         "pt.team ".
-    "FROM ".
-        "pogoco_trainer_stat_latest t ".
-        "INNER JOIN ( ".
-            "SELECT ".
-                "trainer, ".
-                "value, ".
-                "CASE value ".
-                    "WHEN @curValue THEN @curRow := @curRow ".
-                    "ELSE @curRow := @curRow + 1 ".
-                "END AS rank, ".
-                "@curValue := value AS cValue ".
-            "FROM pogoco_trainer_stat_latest i ".
-            "CROSS JOIN (SELECT @curRow := 0, @curValue := -1) var ".
-            "WHERE stat ='".$statId."' ".
-            "ORDER BY value DESC".
-        ") AS r ON r.trainer = t.trainer, ".
-        "pogoco_trainer pt ".
-    "WHERE t.stat = '".$statId."' ".
-     "AND pt.id = t.trainer ".
-    "ORDER BY cast(r.rank as unsigned)");
+    "FROM pogoco_gen_leaderboard pgl, pogoco_trainer pt ".
+    "WHERE pgl.stat = '".$statId."'".
+    "  AND pt.id = pgl.trainer ".
+    "ORDER BY pgl.position"
+  );
 
   $result = array();
   $result['leaderboard'] = array();
@@ -145,12 +130,23 @@ function GetStatLeaderboard($statId) {
 }
 
 
-
-
-
 function GetStatLeaders($statId) {
 
-  $dbResult = dbQuery(
+    $dbResult = dbQuery(
+      "SELECT ".
+          "pgl.position as rank, ".
+          "pgl.value, ".
+          "pgl.trainer, ".
+          "pt.name, ".
+          "pt.team ".
+      "FROM pogoco_gen_leaderboard pgl, pogoco_trainer pt ".
+      "WHERE pgl.stat = '".$statId."'".
+      "  AND pgl.position = 1".
+      "  AND pt.id = pgl.trainer ".
+      "ORDER BY pgl.position"
+    );
+
+  /*$dbResult = dbQuery(
     "SELECT ".
         "r.rank, ".
         "t.value, ".
@@ -176,7 +172,7 @@ function GetStatLeaders($statId) {
         "pogoco_trainer pt ".
     "WHERE t.stat = '".$statId."' ".
       "AND r.rank = 1 ".
-      "AND pt.id = t.trainer ");
+      "AND pt.id = t.trainer ");*/
 
   $result = array();
   $result['leaders'] = array();
@@ -200,78 +196,35 @@ function GetStatsLeaders($map) {
   return _GetStatsLeaders(
     $map,
     "SELECT ".
-        "t.stat, ".
-        "r.rank, ".
-        "t.value, ".
-        "t.trainer, ".
+        "pgl.stat, ".
+        "pgl.position as rank, ".
+        "pgl.value, ".
+        "pgl.trainer, ".
         "pt.name, ".
         "pt.team ".
-    "FROM ".
-        "pogoco_trainer_stat_latest t ".
-        "INNER JOIN ( ".
-            "SELECT  ".
-                "trainer, ".
-                "timestamp, ".
-                "value, ".
-                "stat, ".
-                "CASE stat ".
-                    "WHEN @curStat THEN ".
-                        "CASE value ".
-                            "WHEN @curValue THEN @curRow := @curRow ".
-                            "ELSE @curRow := @curRow + 1 ".
-                        "END ".
-                    "ELSE @curRow := 1 ".
-                "END AS rank, ".
-                "@curValue := value AS cValue, ".
-                "@curStat := stat AS cStat ".
-            "FROM pogoco_trainer_stat_latest  ".
-            "CROSS JOIN (SELECT @curRow := 0, @curStat := '', @curValue := -1) var ".
-            "ORDER BY stat ASC, value DESC, trainer ASC ".
-        ") AS r ON r.trainer = t.trainer AND r.stat = t.stat, ".
-        "pogoco_trainer pt ".
-    "WHERE r.rank = 1 ".
-      "AND pt.id = t.trainer ".
-    "ORDER BY t.stat, r.rank");
+    "FROM pogoco_gen_leaderboard pgl, pogoco_trainer pt ".
+    "WHERE pgl.position = 1".
+    "  AND pt.id = pgl.trainer ".
+    "ORDER BY pgl.position"
+  );
 }
 function GetStatsLeadersForCategory($map, $categoryId) {
   return _GetStatsLeaders(
     $map,
     "SELECT ".
-        "t.stat, ".
-        "r.rank, ".
-        "t.value, ".
-        "t.trainer, ".
+        "pgl.stat, ".
+        "pgl.position as rank, ".
+        "pgl.value, ".
+        "pgl.trainer, ".
         "pt.name, ".
         "pt.team ".
-    "FROM ".
-        "pogoco_trainer_stat_latest t ".
-        "INNER JOIN ( ".
-            "SELECT  ".
-                "trainer, ".
-                "timestamp, ".
-                "value, ".
-                "stat, ".
-                "CASE stat ".
-                    "WHEN @curStat THEN ".
-                        "CASE value ".
-                            "WHEN @curValue THEN @curRow := @curRow ".
-                            "ELSE @curRow := @curRow + 1 ".
-                        "END ".
-                    "ELSE @curRow := 1 ".
-                "END AS rank, ".
-                "@curValue := value AS cValue, ".
-                "@curStat := stat AS cStat ".
-            "FROM pogoco_trainer_stat_latest  ".
-            "CROSS JOIN (SELECT @curRow := 0, @curStat := '', @curValue := -1) var ".
-            "ORDER BY stat, value DESC ".
-        ") AS r ON r.trainer = t.trainer AND r.stat = t.stat, ".
-        "pogoco_stat s, ".
-        "pogoco_trainer pt ".
-    "WHERE t.stat = s.id ".
-      "AND s.stat_category = '".$categoryId."' ".
-      "AND pt.id = t.trainer ".
-      "AND r.rank = 1 ".
-    "ORDER BY t.stat, r.rank");
+    "FROM pogoco_gen_leaderboard pgl, pogoco_stat s, pogoco_trainer pt ".
+    "WHERE t.stat = s.id".
+    "  AND s.stat_category = '".$categoryId."'".
+    "  AND pgl.position = 1".
+    "  AND pt.id = pgl.trainer".
+    "ORDER BY pgl.position"
+  );
 }
 function _GetStatsLeaders($map, $sql) {
 
@@ -316,16 +269,9 @@ function _GetStatsLeaders($map, $sql) {
 function GetStatSummary($statId) {
 
   $dbResult = dbQuery(
-      "SELECT SUM(pts.value) as total ".
-      "FROM pogoco_trainer_stat pts ".
-      "WHERE pts.timestamp = (SELECT t.timestamp ".
-                             "FROM pogoco_trainer_stat t ".
-                             "WHERE t.trainer = pts.trainer ".
-                               "AND t.stat = pts.stat ".
-                             "ORDER BY t.timestamp DESC ".
-                             "LIMIT 1) ".
-      "  AND pts.stat = '".$statId."'".
-      "GROUP BY pts.stat");
+      "SELECT value as total ".
+      "FROM pogoco_gen_stat_summary ".
+      "WHERE stat = '".$statId."'");
 
   $result = array();
   if ($dbResult->num_rows === 1) {
@@ -338,30 +284,17 @@ function GetStatSummary($statId) {
 function GetStatsSummary($map) {
   return _GetStatsSummary(
     $map,
-    "SELECT pts.stat, SUM(pts.value) as total ".
-    "FROM pogoco_trainer_stat pts ".
-    "WHERE pts.timestamp = (SELECT t.timestamp ".
-                           "FROM pogoco_trainer_stat t ".
-                           "WHERE t.trainer = pts.trainer ".
-                             "AND t.stat = pts.stat ".
-                           "ORDER BY t.timestamp DESC ".
-                           "LIMIT 1) ".
-    "GROUP BY pts.stat");
+    "SELECT value as total ".
+    "FROM pogoco_gen_stat_summary ".
+    "WHERE stat = '".$statId."'");
 }
 function GetStatsSummaryForCategory($map, $categoryId) {
   return _GetStatsSummary(
     $map,
-    "SELECT pts.stat, SUM(pts.value) as total ".
-    "FROM pogoco_trainer_stat pts, pogoco_stat ps ".
-    "WHERE pts.timestamp = (SELECT t.timestamp ".
-                           "FROM pogoco_trainer_stat t ".
-                           "WHERE t.trainer = pts.trainer ".
-                             "AND t.stat = pts.stat ".
-                           "ORDER BY t.timestamp DESC ".
-                           "LIMIT 1) ".
-    "  AND ps.stat_category = '".$categoryId."' ".
-    "  AND pts.stat = ps.id ".
-    "GROUP BY pts.stat");
+    "SELECT pgss.stat as stat, pgss.value as total ".
+    "FROM pogoco_gen_stat_summary pgss, pogoco_stat ps ".
+    "WHERE ps.stat_category = '".$categoryId."' ".
+    "  AND pgss.stat = ps.id ");
 }
 function _GetStatsSummary($map, $sql) {
 
@@ -430,41 +363,19 @@ function GetStatsMonthlyLeaders($map, $year, $month) {
 
   $sql =
     "SELECT ".
-        "t.stat, ".
-        "t.value, ".
-        "t.trainer, ".
+        "pglm.stat, ".
+        "pglm.value, ".
+        "pglm.trainer, ".
         "pt.name, ".
         "pt.team ".
     "FROM ".
-        "pogoco_trainer_stat_monthly t ".
-        "INNER JOIN ( ".
-            "SELECT  ".
-                "year, ".
-                "month, ".
-                "trainer, ".
-                "value, ".
-                "stat, ".
-                "CASE stat ".
-                    "WHEN @curStat THEN ".
-                        "CASE value ".
-                            "WHEN @curValue THEN @curRow := @curRow ".
-                            "ELSE @curRow := @curRow + 1 ".
-                        "END ".
-                    "ELSE @curRow := 1 ".
-                "END AS rank, ".
-                "@curValue := value AS cValue, ".
-                "@curStat := stat AS cStat ".
-            "FROM pogoco_trainer_stat_monthly ".
-            "CROSS JOIN (SELECT @curRow := 0, @curStat := '', @curValue := -1) var ".
-            "WHERE month = $month AND year = $year ".
-            "ORDER BY stat ASC, value DESC, trainer ASC ".
-        ") AS r ON r.trainer = t.trainer AND r.stat = t.stat AND r.year = t.year AND r.month = t.month, ".
+        "pogoco_gen_leaderboard_monthly pglm, ".
         "pogoco_trainer pt ".
-    "WHERE r.rank = 1 ".
-      "AND pt.id = t.trainer ".
-      "AND t.month = $month ".
-      "AND t.year = $year ".
-    "ORDER BY t.stat, r.rank";
+    "WHERE pglm.position = 1 ".
+      "AND pt.id = pglm.trainer ".
+      "AND pglm.month = $month ".
+      "AND pglm.year = $year ".
+    "ORDER BY pglm.stat, pglm.position";
 
   $dbResult = dbQuery($sql);
 
@@ -503,35 +414,19 @@ function GetStatMonthlyLeaderboard($statId, $year, $month) {
 
   $dbResult = dbQuery(
     "SELECT ".
-        "r.rank, ".
-        "t.value, ".
-        "t.trainer, ".
+        "pglm.position as rank, ".
+        "pglm.value, ".
+        "pglm.trainer, ".
         "pt.name, ".
         "pt.team ".
     "FROM ".
-        "pogoco_trainer_stat_monthly t ".
-        "INNER JOIN ( ".
-            "SELECT ".
-                "year, ".
-                "month, ".
-                "trainer, ".
-                "value, ".
-                "CASE value ".
-                    "WHEN @curValue THEN @curRow := @curRow ".
-                    "ELSE @curRow := @curRow + 1 ".
-                "END AS rank, ".
-                "@curValue := value AS cValue ".
-            "FROM pogoco_trainer_stat_monthly i ".
-            "CROSS JOIN (SELECT @curRow := 0, @curValue := -1) var ".
-            "WHERE stat ='".$statId."' AND month = $month AND year = $year ".
-            "ORDER BY value DESC".
-        ") AS r ON r.trainer = t.trainer AND r.year = t.year AND r.month = t.month, ".
+        "pogoco_gen_leaderboard_monthly pglm, ".
         "pogoco_trainer pt ".
-    "WHERE t.stat = '".$statId."' ".
-     "AND pt.id = t.trainer ".
-     "AND t.month = $month ".
-     "AND t.year = $year ".
-    "ORDER BY cast(r.rank as unsigned)");
+    "WHERE pglm.stat = '".$statId."' ".
+     "AND pt.id = pglm.trainer ".
+     "AND pglm.month = $month ".
+     "AND pglm.year = $year ".
+    "ORDER BY pglm.position");
 
   $result = array();
   $result['leaderboard'] = array();

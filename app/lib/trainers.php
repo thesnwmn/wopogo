@@ -55,37 +55,17 @@ function GetTrainerStats($map, $trainer) {
 
   $sql =
     "SELECT ".
-        "t.stat, ".
-        "r.rank, ".
-        "t.value, ".
+        "pgl.stat, ".
+        "pgl.position as rank, ".
+        "pgl.value, ".
         "ps.* ".
     "FROM ".
-        "pogoco_trainer_stat_latest t ".
-        "INNER JOIN ( ".
-            "SELECT  ".
-                "trainer, ".
-                "timestamp, ".
-                "value, ".
-                "stat, ".
-                "CASE stat ".
-                    "WHEN @curStat THEN ".
-                        "CASE value ".
-                            "WHEN @curValue THEN @curRow := @curRow ".
-                            "ELSE @curRow := @curRow + 1 ".
-                        "END ".
-                    "ELSE @curRow := 1 ".
-                "END AS rank, ".
-                "@curValue := value AS cValue, ".
-                "@curStat := stat AS cStat ".
-            "FROM pogoco_trainer_stat_latest  ".
-            "CROSS JOIN (SELECT @curRow := 0, @curStat := '', @curValue := -1) var ".
-            "ORDER BY stat ASC, value DESC, trainer ASC ".
-        ") AS r ON r.trainer = t.trainer AND r.stat = t.stat, ".
+        "pogoco_gen_leaderboard pgl, ".
         "pogoco_stat ps, ".
         "pogoco_trainer pt ".
-    "WHERE t.trainer = pt.id ".
+    "WHERE pgl.trainer = pt.id ".
       "AND (pt.id = '$trainer' OR pt.name = '$trainer') ".
-      "AND ps.id = t.stat ";
+      "AND ps.id = pgl.stat ";
 
     $result = $db->query($sql);
     $obj['stats'] = array();
@@ -126,39 +106,18 @@ function GetTrainerStat($trainer, $stat) {
 
   $sql =
     "SELECT ".
-        "t.stat, ".
-        "r.rank, ".
-        "t.value, ".
+        "pgl.stat, ".
+        "pgl.position as rank, ".
+        "pgl.value, ".
         "ps.* ".
     "FROM ".
-        "pogoco_trainer_stat_latest t ".
-        "INNER JOIN ( ".
-            "SELECT  ".
-                "trainer, ".
-                "timestamp, ".
-                "value, ".
-                "stat, ".
-                "CASE stat ".
-                    "WHEN @curStat THEN ".
-                        "CASE value ".
-                            "WHEN @curValue THEN @curRow := @curRow ".
-                            "ELSE @curRow := @curRow + 1 ".
-                        "END ".
-                    "ELSE @curRow := 1 ".
-                "END AS rank, ".
-                "@curValue := value AS cValue, ".
-                "@curStat := stat AS cStat ".
-            "FROM pogoco_trainer_stat_latest  ".
-            "CROSS JOIN (SELECT @curRow := 0, @curStat := '', @curValue := -1) var ".
-            "WHERE stat ='$stat' ".
-            "ORDER BY stat ASC, value DESC, trainer ASC ".
-        ") AS r ON r.trainer = t.trainer AND r.stat = t.stat, ".
+        "pogoco_gen_leaderboard pgl, ".
         "pogoco_stat ps, ".
         "pogoco_trainer pt ".
-    "WHERE t.trainer = pt.id ".
+    "WHERE pgl.trainer = pt.id ".
       "AND (pt.id = '$trainer' OR pt.name = '$trainer') ".
-      "AND t.stat = '$stat' ".
-      "AND ps.id = t.stat ";
+      "AND pgl.stat = '$stat' ".
+      "AND ps.id = pgl.stat ";
 
     $result = $db->query($sql);
     if ($result->num_rows > 0) {
@@ -189,42 +148,22 @@ function GetTrainerLevel($trainer) {
 
   $sql =
     "SELECT ".
-        "t.stat, ".
-        "r.rank, ".
-        "t.value, ".
+        "pgl.stat, ".
+        "pgl.position as rank, ".
+        "pgl.value, ".
         "ps.* ".
     "FROM ".
-        "pogoco_trainer_stat_latest t ".
-        "INNER JOIN ( ".
-            "SELECT  ".
-                "trainer, ".
-                "timestamp, ".
-                "value, ".
-                "stat, ".
-                "CASE stat ".
-                    "WHEN @curStat THEN ".
-                        "CASE value ".
-                            "WHEN @curValue THEN @curRow := @curRow ".
-                            "ELSE @curRow := @curRow + 1 ".
-                        "END ".
-                    "ELSE @curRow := 1 ".
-                "END AS rank, ".
-                "@curValue := value AS cValue, ".
-                "@curStat := stat AS cStat ".
-            "FROM pogoco_trainer_stat_latest  ".
-            "CROSS JOIN (SELECT @curRow := 0, @curStat := '', @curValue := -1) var ".
-            "WHERE stat ='xp' ".
-            "ORDER BY stat ASC, value DESC, trainer ASC ".
-        ") AS r ON r.trainer = t.trainer AND r.stat = t.stat, ".
+        "pogoco_gen_leaderboard pgl, ".
         "pogoco_stat ps, ".
         "pogoco_trainer pt ".
-    "WHERE t.trainer = pt.id ".
+    "WHERE pgl.trainer = pt.id ".
       "AND (pt.id = '$trainer' OR pt.name = '$trainer') ".
-      "AND t.stat = 'xp' ".
-      "AND ps.id = t.stat ";
+      "AND pgl.stat = 'xp' ".
+      "AND ps.id = pgl.stat ";
 
   $result = $db->query($sql);
 
+  print_r($result);
   $xp = 0;
 
   if ($result->num_rows === 1) {
@@ -314,19 +253,14 @@ function GetTrainers() {
 }
 function GetLastUpdatedTrainers($limit = 20) {
   return _GetTrainers(
-    "SELECT ".
-	      "pt.id, pt.name, pt.team, pt.user, ".
-        "( ".
-          "SELECT timestamp ".
-          "FROM pogoco_trainer_stat_latest ptsl ".
-          "WHERE ptsl.trainer = pt.id ".
-          "ORDER BY timestamp DESC ".
-          "LIMIT 1 ".
-        ") as last_update ".
-    "FROM pogoco_trainer pt ".
-    "ORDER BY last_update DESC
-    LIMIT $limit");
+    "SELECT pglu.trainer as id, pglu.timestamp as last_update, pt.name, pt.team, pt.user ".
+    "FROM pogoco_gen_last_updated pglu, pogoco_trainer pt ".
+    "WHERE pt.id = pglu.trainer ".
+    "ORDER BY pglu.timestamp DESC ".
+    "LIMIT $limit"
+  );
 }
+
 function GetTrainersForUserByName($username) {
   return _getTrainers(
     "SELECT ".
@@ -355,6 +289,7 @@ function _GetTrainers($sql) {
   $obj['trainers'] = array();
 
   if ($result->num_rows > 0) {
+
       while($row = $result->fetch_assoc()) {
 
         $rowObj = array();
